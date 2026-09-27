@@ -148,7 +148,6 @@ async function saveAudioToCache(audioUrl) {
   const cache = await window.caches.open(cacheName);
 
   await cache.add(audioUrl); 
-  //console.log(audioUrl + ' stored');
 }
 
 for (const song of songList) {
@@ -167,7 +166,12 @@ async function shuffle(currentSong) {
     audio.play();
 
     songsList = songsList.filter(item => item !== currentSong);
+}
 
+function repeatSongs(){
+    currentSong = getRandomItem(songsList);
+    SL.textContent = currentSong;
+    shuffle(currentSong);
 }
 
 function getRandomItem(arr) {
@@ -175,13 +179,20 @@ function getRandomItem(arr) {
         songsList = songList
     }
 
-    return arr[Math.floor(Math.random() * arr.length)];
+    song = arr[Math.floor(Math.random() * arr.length)];
+
+    if (song == undefined) {
+        repeatSongs()
+    }
+    return song
 };
 
 function setSong(song) {
     currentSong = song
     shuffle(currentSong)
 }
+
+
 
 audio.addEventListener('ended', () => {
     currentSong = getRandomItem(songsList);
@@ -193,7 +204,6 @@ shuffleButton.addEventListener("click", function() {
     currentSong = getRandomItem(songsList);
     SL.textContent = currentSong;
     SL.onclick = () => setSong(currentSong);
-
     shuffle(currentSong);
 });
 

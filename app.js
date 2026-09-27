@@ -158,7 +158,12 @@ function getRandomItem(arr) {
         songsList = songList
     }
 
-    return arr[Math.floor(Math.random() * arr.length)];
+    song = arr[Math.floor(Math.random() * arr.length)];
+
+    if (song == undefined) {
+        repeatSongs()
+    }
+    return song
 };
 
 function setSong(song) {
