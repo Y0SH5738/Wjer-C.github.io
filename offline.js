@@ -2,11 +2,12 @@ const songList = []
 fetch('./songs.json')
     .then(res => res.json())
     .then(data => {
-        songsJson = data
+        var songsJson = data
         for (x in songsJson) {
-            songList.push(String(songsJson[x]))
+            songList.push(String(songsJson[x]));
         }
-        init()
+        saveAudioToCache(songList);
+        init();
 })
 var songsList = songList
 const SL = document.getElementById('songPrint');
@@ -14,30 +15,23 @@ const shuffleButton = document.getElementById('shuffle');
 const songPlayer = document.getElementById('song');
 const audio = document.getElementById('audio');
 const collapsibleList = document.getElementById('all');
-
-
-currentSong = songList[1]
 audio.loop = false;
 
-
-
-
-
-async function saveAudioToCache(audioUrl) {
-  const cacheName = 'song-cache';
-  const cache = await window.caches.open(cacheName);
-
-  await cache.add(audioUrl); 
-}
-
-for (const song of songList) {
-    saveAudioToCache('songs/' + song);
+async function saveAudioToCache(songs) {
+    const cacheName = 'song-cache';
+    const cache = await window.caches.open(cacheName);
+    for (const song of songs) {
+        try{
+            await cache.add('songs/' + song); 
+        } catch (error) {
+            console.error("no song cache", song, error)
+        }
+    }
 }
 
 async function shuffle(currentSong) {
     const cache = await window.caches.open('song-cache');
-    const cachedResponse = await cache.match('songs/' + currentSong);
-    console.log(cachedResponse);
+    const cachedResponse = await cache.match('songs/' + String(currentSong));
     const songBlob = await cachedResponse.blob();
     const localUrl = URL.createObjectURL(songBlob);
 
@@ -94,7 +88,6 @@ function init() {
     collapsibleList.innerHTML = songList
         .map(songList => `<li onclick='setSong("${songList}")'>${songList}</li><div class="divide"></div>`)
         .join('');
-
 
     shuffle(currentSong);
     init = false
