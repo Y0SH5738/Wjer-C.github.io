@@ -1,4 +1,4 @@
-const songList = [
+[
 "001 - weathergirl ft. Eleanor Forte.mp3",
 "002 - 混沌ブギ ⧸ jon-YAKITORY, 初音ミク -Konton Boogie ⧸ jon-YAKITORY, Hatsune Miku-.mp3",
 "003 - メズマライザー ⧸ 初音ミク・重音テトSV - Mesmerizer.mp3",
@@ -130,71 +130,5 @@ const songList = [
 "129 - ヘレディティ ⧸ 初音ミク・GUMI・IA・Flower・可不・重音テトSV - Heredity.mp3",
 "130 - Lostinsummer feat. Kasane Teto.mp3",
 "131 - Just a Hint of You (feat. GUMI).mp3",
-];
-songsList = songList
-const SL = document.getElementById('songPrint');
-const shuffleButton = document.getElementById('shuffle');
-const songPlayer = document.getElementById('song');
-const audio = document.getElementById('audio');
-const collapsibleList = document.getElementById('all');
-
-
-currentSong = songList[1]
-audio.loop = false;
-
-
-
-function shuffle(currentSong) {
-    songPlayer.src = 'songs/' + currentSong;
-    audio.load();
-    audio.play();
-
-    songsList = songsList.filter(item => item !== currentSong);
-
-}
-
-function getRandomItem(arr) {
-    if (arr.length <= 0) {
-        songsList = songList
-    }
-
-    song = arr[Math.floor(Math.random() * arr.length)];
-
-    if (song == undefined) {
-        repeatSongs()
-    }
-    return song
-};
-
-function setSong(song) {
-    currentSong = song
-    shuffle(currentSong)
-}
-
-audio.addEventListener('ended', () => {
-    currentSong = getRandomItem(songsList);
-    SL.textContent = currentSong;
-    shuffle(currentSong);
-});
-
-shuffleButton.addEventListener("click", function() {
-    currentSong = getRandomItem(songsList);
-    SL.textContent = currentSong;
-    SL.onclick = () => setSong(currentSong);
-
-    shuffle(currentSong);
-});
-
-
-
-currentSong = getRandomItem(songsList);
-SL.textContent = currentSong;
-
-collapsibleList.innerHTML = songList
-    .map(songList => `<li onclick='setSong("${songList}")'>${songList}</li><div class="divide"></div>`)
-    .join('');
-
-
-shuffle(currentSong);
-
-
+"132 - ピノキオピー - 神っぽいな feat. 初音ミク ⧸ God-ish.mp3 "
+]
