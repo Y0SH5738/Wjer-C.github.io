@@ -3,7 +3,7 @@ import yt_dlp
 from pathlib import Path
 import json
 
-folder = r"./Wjer-C.github.io/songs"
+folder = r"./Y0SH5738.github.io/songs"
 songNum = len(list(Path(folder).iterdir()))
 files = sorted(Path(folder).iterdir())
 newSong = True
@@ -30,7 +30,7 @@ def download_youtube(video_url, download_type):
         songAddData = ydl.extract_info(url, download=False)
         songAddWebm = ydl.prepare_filename(songAddData)
         songAdd = os.path.basename(songAddWebm.rsplit('.', 1)[0] + '.mp3')
-        with open("Wjer-C.github.io/songs.json", "w") as songJson:
+        with open("Y0SH5738.github.io/songs.json", "w") as songJson:
             fileList = []
             for file in files:
                 fileList.append(os.path.basename(file))
